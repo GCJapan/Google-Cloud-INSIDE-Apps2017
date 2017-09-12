@@ -10,14 +10,14 @@ def send_message(mes):
     values = {'mes' : mes}
     headers = {'content-type': 'application/json'}
     f = requests.post(url, data=json.dumps(values), headers=headers)
-    res = json.loads(json.loads(f.text))
+    res = f.text
     return res
 
 def main():
     print("")
     print('＝＝＝Google Cloud INSIGHT Games & Apps 2017＝＝＝')
     print("")
-    print(u'グーグル雲太郎: まだ未熟者ですが、よろしくお願いします ! ("exit"で終了します)。')
+    print(send_message(""))
 
     while(True):
         try:
@@ -26,8 +26,7 @@ def main():
             input_test_word = input('You: ')
         if input_test_word == "exit":
             sys.exit()
-        res = send_message(input_test_word)
-        print(u"グーグル雲太郎: "+res["result"]["fulfillment"]["speech"])
+        print(send_message(input_test_word))
 
 if __name__ == '__main__':
     main()
