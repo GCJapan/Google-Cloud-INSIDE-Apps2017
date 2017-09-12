@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib2
+import requests
 import json
 import sys
 
 def send_message(mes):
     url = "http://35.194.191.240/"
-    headers = {"Content-Type" : "application/json"}
     values = {'mes' : mes}
-    json_data = json.dumps(values).encode("utf-8")
-    req = urllib2.Request(url, data=json_data, headers=headers)
-    f = urllib2.urlopen(req)
-    res = json.loads(json.loads(f.read().decode("utf-8")))
+    headers = {'content-type': 'application/json'}
+    f = requests.post(url, data=json.dumps(values), headers=headers)
+    res = json.loads(json.loads(f.text))
     return res
 
 def main():
@@ -22,7 +20,10 @@ def main():
     print(u'グーグル雲太郎: まだ未熟者ですが、よろしくお願いします ! ("exit"で終了します)。')
 
     while(True):
-        input_test_word = raw_input('You: ')
+        try:
+            input_test_word = raw_input('You: ')
+        except:
+            input_test_word = input('You: ')
         if input_test_word == "exit":
             sys.exit()
         res = send_message(input_test_word)
